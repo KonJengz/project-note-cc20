@@ -6,6 +6,7 @@ import * as Yup from "yup";
 // import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import { Loader } from "lucide-react";
 
 const initialInput = {
   email: "",
@@ -23,6 +24,7 @@ function RegisterPage() {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setInput((prev) => ({ ...prev, [name]: value }));
+    setInputError((prev) => ({ ...prev, [name]: "" }));
   };
 
   const handleSubmit = async (e) => {
@@ -40,6 +42,8 @@ function RegisterPage() {
 
       //navigite
       navigate("/");
+      setInput(initialInput);
+      setInputError(initialInput);
 
       //alart
       toast.success("Register Success");
@@ -101,10 +105,12 @@ function RegisterPage() {
         />
 
         <button
-          className="w-full py-2 bg-amber-700 text-white rounded-xl cursor-pointer hover:underline"
+          disabled={isLoading}
+          className="w-full flex justify-center gap-2 py-2 bg-amber-700 text-white rounded-xl cursor-pointer hover:underline"
           type="submit"
         >
-          Register
+          {isLoading && <Loader className="animate-spin" />}
+          {isLoading ? "Loading..." : "Register"}
         </button>
       </form>
     </div>

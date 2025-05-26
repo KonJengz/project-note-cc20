@@ -22,7 +22,7 @@ function NoteItem({ item, handleDelete }) {
   //   const [inputError, setInputError] = useState(initialInput);
   //   const [isLoading, setIsLoading] = useState(false);
 
-  //   const actionFetchUpdate = useNoteStore((state) => state.actionFetchUpdate);
+  const actionFetchAllNote = useNoteStore((state) => state.actionFetchAllNote);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -42,7 +42,7 @@ function NoteItem({ item, handleDelete }) {
       await fetchUpdateNote(id, input);
 
       toast.success("update success");
-      //   await actionFetchAllNote();
+      await actionFetchAllNote();
     } catch (error) {
       console.log(error);
     }

@@ -1,5 +1,8 @@
 import { useEffect } from "react";
 import useNoteStore from "../stores/noteStore";
+import { fetchDeleteNote } from "../apis/noteApi";
+import { toast } from "react-toastify";
+import NoteItem from "../components/note/NoteItem";
 
 function NotePage() {
   const notes = useNoteStore((state) => state.notes);
@@ -11,22 +14,23 @@ function NotePage() {
 
   console.log("notes", notes);
 
+  const handleDelete = async (id) => {
+    try {
+      //api
+      fetchDeleteNote(id);
+      toast.success("Delete Success");
+
+      // fetch
+      actionFetchAllNote();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="space-y-6">
       {notes.map((item) => (
-        <div key={item.id}>
-          <h1 className="text-2xl">{item.note}</h1>
-          <p>{item.detail}</p>
-
-          <div className="space-x-2">
-            <button className="px-4 py-2 bg-amber-700 rounded-xl cursor-pointer hover:underline text-white">
-              Edit
-            </button>
-            <button className="px-4 py-2 bg-amber-700 rounded-xl cursor-pointer hover:underline text-white">
-              Delete
-            </button>
-          </div>
-        </div>
+        <NoteItem handleDelete={handleDelete} key={item.id} item={item} />
       ))}
     </div>
   );

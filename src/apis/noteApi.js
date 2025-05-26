@@ -13,3 +13,16 @@ export const fetchAllNote = () => {
   const data = fetch(baseURL).then((res) => res.json());
   return data;
 };
+
+export const fetchDeleteNote = (id) => {
+  fetch(`${baseURL}/${id}`, {
+    method: "DELETE",
+  });
+};
+
+export const fetchUpdateNote = async (id, data) => {
+  await fetch(`${baseURL}/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(data),
+  });
+};
